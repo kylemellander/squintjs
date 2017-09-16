@@ -18,6 +18,26 @@
   "bugs": {
     "url": "https://github.com/kylemellander/squint/issues"
   },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "globals": {
+      "describe": true,
+      "it": true      
+    }
+  },
   "homepage": "https://github.com/kylemellander/squint#readme",
   "dependencies": {
   },
