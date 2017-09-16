@@ -1,7 +1,6 @@
-export const adjustByPercent = (bounds, key, percent) => {
-  const height = bounds.bottom - bounds.top;
-  const adjustmentValue = height * percent / 100;
-  
+export const adjustByPercent = (bounds, key, percent = 0) => {
+  const adjustmentValue = bounds.height * percent / 100;
+
   return bounds[key] + adjustmentValue;
 }
 
