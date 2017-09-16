@@ -33,10 +33,6 @@
     "parserOptions": {
       "ecmaVersion": 6,
       "sourceType": "module"
-    },
-    "globals": {
-      "describe": true,
-      "it": true      
     }
   },
   "homepage": "https://github.com/kylemellander/squint#readme",
