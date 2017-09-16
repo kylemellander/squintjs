@@ -5,7 +5,7 @@ const {
   isDOMRect
 } = require('../dist/squint.min.js');
 
-describe('isDOMRect()', function() {
+describe('isDOMRect()', () => {
   it('returns true if element has function #getBoundingClientRect', () => {
     assert.ok(isDOMRect({ getBoundingClientRect: () => {} }));
   });
