@@ -14,7 +14,7 @@
     "auto-scroll"
   ],
   "author": "Kyle Mellander",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kylemellander/squint/issues"
   },
