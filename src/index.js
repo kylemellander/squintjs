@@ -1,3 +1,6 @@
+export const offsetBottom = (bounds, offset) =>
+  offsetBoundary(bounds, 'bottom', offset, -1);
+
 export const offsetBoundary = (bounds, key, offset, modifier = 1) => {
   if (!offset) {
     return bounds[key];
