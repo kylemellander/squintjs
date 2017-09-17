@@ -2,7 +2,8 @@
 const assert = require('assert');
 const {
   adjustByPercent,
-  isDOMRect
+  isDOMRect,
+  offsetBoundary
 } = require('../dist/squint.min.js');
 
 describe('isDOMRect()', () => {
@@ -34,5 +35,11 @@ describe('adjustByPercent()', () => {
 
   it('returns the bounds minus the percentage if percent is negative', () => {
     assert.equal(adjustByPercent({ key: 10, height: 10 }, 'key', -10), 9);
+  });
+});
+
+describe('offsetBoundary()', () => {
+  it('returns the value of the key put in if offset is not set', () => {
+    assert.equal(offsetBoundary({ key: 'value' }, 'key'), 'value');
   });
 });
