@@ -2,15 +2,78 @@
 const assert = require('assert');
 const {
   adjustByPercent,
+  findScrollTo,
   isDOMRect,
   offsetBottom,
   offsetBoundary,
   offsetTop
-} = require('../dist/squint.min.js');
+} = require('../src/index.js');
+
+const mockElement = (options = {}) => ({
+  offsetTop: options.offsetTop || 0,
+  contains: () => options.contains !== false,
+  getBoundingClientRect: () => Object.assign({
+    top: 10,
+    bottom: 20,
+    height: 10,
+  }, options)
+});
+
+describe('findScrollTo()', () => {
+  it('returns false if element is not valid', () => {
+    assert.equal(findScrollTo(undefined, mockElement()), false);
+  });
+
+  it('returns false if container is not valid', () => {
+    const element = mockElement();
+
+    assert.equal(findScrollTo(element, undefined), false);
+  });
+
+  describe('top of element is above the top of the container', () => {
+    it('returns the position at which the element needs to scroll to', () => {
+      const result = findScrollTo(
+        mockElement({ offsetTop: 20 }),
+        mockElement({ top: 20, offsetTop: 10 })
+      );
+
+      assert.equal(result, 10);
+    });
+  });
+
+  describe('bottom of element is below the bottom of the container', () => {
+    it('returns the position at which the element needs to scroll to', () => {
+      const result = findScrollTo(
+        mockElement({ bottom: 120, offsetTop: 100 }),
+        mockElement({ bottom: 110, height: 100 })
+      );
+
+      assert.equal(result, 10);
+    });
+  });
+
+  it ('returns false if element is within bounds of container', () => {
+    const result = findScrollTo(
+      mockElement({ top: 20, bottom: 30 }),
+      mockElement({ top: 10, bottom: 40 })
+    );
+
+    assert.equal(result, false);
+  });
+
+  it ('returns false if element is not a descendent of container', () => {
+    const result = findScrollTo(
+      mockElement({ offsetTop: 20 }),
+      mockElement({ top: 20, offsetTop: 10, contains: false })
+    );
+
+    assert.equal(result, false);
+  });
+});
 
 describe('isDOMRect()', () => {
   it('returns true if element has function #getBoundingClientRect', () => {
-    assert.ok(isDOMRect({ getBoundingClientRect: () => {} }));
+    assert.ok(isDOMRect(mockElement()));
   });
 
   it('returns falsy if element does not exist', () => {
