@@ -1,3 +1,66 @@
+export default function scrollIntoView(element, container, options = {}) {
+  const position = findScrollTo(element, container, options);
+
+  if (typeof position === 'number') {
+    animateScrolling(container, position, options.duration || 500);
+  }
+
+  return element;
+}
+
+export const findScrollTo = (element, container, options = {}) => {
+  if (!isDOMRect(element) || !isDOMRect(container)) {
+    return false;
+  }
+
+  if (!container.contains(element)) {
+    return false;
+  }
+
+  const { top, bottom, height } = element.getBoundingClientRect();
+  const containerBounds = container.getBoundingClientRect();
+  const containerTop = offsetTop(containerBounds, options.offset);
+  const containerBottom = offsetBottom(containerBounds, options.offset);
+
+  if (top < containerTop) {
+    const relativeTop = element.offsetTop - container.offsetTop;
+    const padding = containerBounds.top - containerTop;
+
+    return relativeTop + padding;
+  }
+
+  if (bottom > containerBottom) {
+    const relativeTop = element.offsetTop - container.offsetTop;
+    const relativeBottom = relativeTop - containerBounds.height + height;
+    const padding = containerBounds.bottom - containerBottom;
+
+    return relativeBottom + padding;
+  }
+
+  return false;
+}
+
+export const animateScrolling = (container, position, duration) => {
+  const cosParam = (container.scrollTop - position) / 2;
+  let scrollCount = 0;
+  let oldTimestamp = performance.now();
+
+  const nextFrame = newTimestamp => {
+    scrollCount += Math.PI / (duration / (newTimestamp - oldTimestamp));
+    if (scrollCount >= Math.PI) {
+      container.scrollTop = position;
+      return;
+    }
+
+    const distanceTravelled = cosParam + cosParam * Math.cos(scrollCount);
+    container.scrollTop = position + distanceTravelled;
+    oldTimestamp = newTimestamp;
+    window.requestAnimationFrame(nextFrame);
+  }
+
+  window.requestAnimationFrame(nextFrame);
+}
+
 export const offsetTop = (bounds, offset) =>
   offsetBoundary(bounds, 'top', offset);
 
