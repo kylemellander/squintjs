@@ -20,6 +20,10 @@ or
 yarn add squintjs
 ```
 
+## Demo
+
+https://codepen.io/kylemellander/pen/BwNgNj/
+
 ## Usage
 
 #### scrollIntoView
