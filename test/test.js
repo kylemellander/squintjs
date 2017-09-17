@@ -4,7 +4,8 @@ const {
   adjustByPercent,
   isDOMRect,
   offsetBottom,
-  offsetBoundary
+  offsetBoundary,
+  offsetTop
 } = require('../dist/squint.min.js');
 
 describe('isDOMRect()', () => {
@@ -84,5 +85,23 @@ describe('offsetBottom()', () => {
 
   it('returns bottom minus percent of height if offset a percent', () => {
     assert.equal(offsetBottom({ bottom: 10, height: 10 }, '10%'), 9);
+  });
+});
+
+describe('offsetTop()', () => {
+  it('returns the value of top if offset is not defined', () => {
+    assert.equal(offsetTop({ top: 10 }), 10);
+  });
+
+  it('returns top minus offset if offset is an integer', () => {
+    assert.equal(offsetTop({ top: 10 }, 10), 20);
+  });
+
+  it('returns top minus offset if offset is integer as string', () => {
+    assert.equal(offsetTop({ top: 10 }, '10'), 20);
+  });
+
+  it('returns top minus percent of height if offset a percent', () => {
+    assert.equal(offsetTop({ top: 10, height: 10 }, '10%'), 11);
   });
 });
