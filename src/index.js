@@ -1,3 +1,15 @@
+export const offsetBoundary = (bounds, key, offset, modifier = 1) => {
+  if (!offset) {
+    return bounds[key];
+  }
+
+  if (typeof offset === 'number' || offset.slice(-1) !== '%') {
+     return bounds[key] + (parseInt(offset) * modifier);
+  }
+
+  return adjustByPercent(bounds, key, parseInt(offset.slice(0, -1)) * modifier);
+}
+
 export const adjustByPercent = (bounds, key, percent = 0) => {
   const adjustmentValue = bounds.height * percent / 100;
 
