@@ -2,7 +2,7 @@
   "name": "squintjs",
   "version": "1.1.1",
   "description": "A library for making sure that the given element is on screen",
-  "main": "src/index.js",
+  "main": "dist/squint.min.js",
   "scripts": {
     "build": "webpack -p",
     "test": "mocha --compilers js:babel-core/register"
