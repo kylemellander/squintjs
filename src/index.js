@@ -1,4 +1,4 @@
-export default function scrollIntoView(element, container, options = {}) {
+export const scrollIntoView = (element, container, options = {}) => {
   const position = findScrollTo(element, container, options);
 
   if (typeof position === 'number') {

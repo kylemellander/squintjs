@@ -31,7 +31,7 @@ https://codepen.io/kylemellander/pen/BwNgNj/
 To access you can put this in your javascript:
 
 ```
-import scrollIntoView from 'squintjs';
+import { scrollIntoView } from 'squintjs';
 ```
 
 ##### Arguments
