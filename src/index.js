@@ -21,16 +21,18 @@ export const findScrollTo = (element, container, options = {}) => {
   const containerBounds = container.getBoundingClientRect();
   const containerTop = offsetTop(containerBounds, options.offset);
   const containerBottom = offsetBottom(containerBounds, options.offset);
+  const containerPosition = window.getComputedStyle(container)['position'];
+  const relativeTop = containerPosition === 'relative' ?
+    element.offsetTop :
+    element.offsetTop - container.offsetTop;
 
   if (top < containerTop) {
-    const relativeTop = element.offsetTop - container.offsetTop;
     const padding = containerBounds.top - containerTop;
 
     return relativeTop + padding;
   }
 
   if (bottom > containerBottom) {
-    const relativeTop = element.offsetTop - container.offsetTop;
     const relativeBottom = relativeTop - containerBounds.height + height;
     const padding = containerBounds.bottom - containerBottom;
 
