@@ -17,14 +17,11 @@ export const findScrollTo = (element, container, options = {}) => {
     return false;
   }
 
-  const { top, bottom, height } = element.getBoundingClientRect();
+  const { top, bottom } = element.getBoundingClientRect();
   const containerBounds = container.getBoundingClientRect();
   const containerTop = offsetTop(containerBounds, options.offset);
   const containerBottom = offsetBottom(containerBounds, options.offset);
-  const containerPosition = window.getComputedStyle(container)['position'];
-  const relativeTop = containerPosition === 'relative' ?
-    element.offsetTop :
-    element.offsetTop - container.offsetTop;
+  const relativeTop = top + container.scrollTop - containerBounds.top;
 
   if (top < containerTop) {
     const padding = containerBounds.top - containerTop;
@@ -33,7 +30,9 @@ export const findScrollTo = (element, container, options = {}) => {
   }
 
   if (bottom > containerBottom) {
-    const relativeBottom = relativeTop - containerBounds.height + height;
+    const relativeBottom = relativeTop -
+      container.clientHeight +
+      element.offsetHeight;
     const padding = containerBounds.bottom - containerBottom;
 
     return relativeBottom + padding;
